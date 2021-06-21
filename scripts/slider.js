@@ -5,29 +5,33 @@ class Slideshow {
     constructor(userOptions = {}) {
         const defaultOptions = {
         $el: $('.slideshow'),
-        sPg: true,
-        dur: 10000,
-        aP: true };
+        showArrows: false,
+        showPagination: true,
+        duration: 5000,
+        autoplay: true };
 
 
         let options = Object.assign({}, defaultOptions, userOptions);
 
         this.$el = options.$el;
-        this.mS = this.$el.find($('.js-slider-home-slide')).length;
-        this.sPg = options.sPg;
+        this.maxSlide = this.$el.find($('.js-slider-home-slide')).length;
+        this.showArrows = this.maxSlide > 1 ? options.showArrows : false;
+        this.showPagination = options.showPagination;
         this.currentSlide = 1;
         this.isAnimating = false;
-        this.animDur = 1200;
-        this.aPSpeed = options.dur;
+        this.animationDuration = 1200;
+        this.autoplaySpeed = options.duration;
         this.interval;
         this.$controls = this.$el.find('.js-slider-home-button');
-        this.aP = this.mS > 1 ? options.aP : false;
+        this.autoplay = this.maxSlide > 1 ? options.autoplay : false;
 
+        this.$el.on('click', '.js-slider-home-next', event => this.nextSlide());
+        this.$el.on('click', '.js-slider-home-prev', event => this.prevSlide());
         this.$el.on('click', '.js-pagination-item', event => {
-        if (!this.isAnimating) {
-            this.preventClick();
-            this.goToSlide(event.target.dataset.slide);
-        }
+            if (!this.isAnimating) {
+                this.preventClick();
+                this.goToSlide(event.target.dataset.slide);
+            }
         });
 
         this.init();
@@ -35,21 +39,22 @@ class Slideshow {
 
     init() {
         this.goToSlide(1);
-        if (this.aP) {
-        this.startaP();
+        if (this.autoplay) {
+        this.startAutoplay();
         }
 
-        if (this.sPg) {
-        let page = '<div class="pagination"><div class="container">';
+        if (this.showPagination) {
+        let paginationNumber = this.maxSlide;
+        let pagination = '<div class="pagination"><div class="container">';
 
-        for (let i = 0; i < this.mS; i++) {
+        for (let i = 0; i < this.maxSlide; i++) {
             let item = `<span class="pagination__item js-pagination-item ${i === 0 ? 'is-current' : ''}" data-slide=${i + 1}>${i + 1}</span>`;
-            page = page + item;
+            pagination = pagination + item;
         }
 
-        page = page + '</div></div>';
+        pagination = pagination + '</div></div>';
 
-        this.$el.append(page);
+        this.$el.append(pagination);
         }
     }
 
@@ -59,47 +64,57 @@ class Slideshow {
         clearInterval(this.interval);
 
         setTimeout(() => {
-        this.isAnimating = false;
-        this.$controls.prop('disabled', false);
-        if (this.aP) {
-            this.startaP();
-        }
-        }, this.animDur);
+            this.isAnimating = false;
+            this.$controls.prop('disabled', false);
+            if (this.autoplay) {
+                this.startAutoplay();
+            }
+        }, this.animationDuration);
     }
 
     goToSlide(index) {
         this.currentSlide = parseInt(index);
 
-        if (this.currentSlide > this.mS) {
+        if (this.currentSlide > this.maxSlide) {
         this.currentSlide = 1;
         }
 
         if (this.currentSlide === 0) {
-        this.currentSlide = this.mS;
+        this.currentSlide = this.maxSlide;
         }
 
         const newCurrent = this.$el.find('.js-slider-home-slide[data-slide="' + this.currentSlide + '"]');
         const newPrev = this.currentSlide === 1 ? this.$el.find('.js-slider-home-slide').last() : newCurrent.prev('.js-slider-home-slide');
-        const newNext = this.currentSlide === this.mS ? this.$el.find('.js-slider-home-slide').first() : newCurrent.next('.js-slider-home-slide');
+        const newNext = this.currentSlide === this.maxSlide ? this.$el.find('.js-slider-home-slide').first() : newCurrent.next('.js-slider-home-slide');
 
         this.$el.find('.js-slider-home-slide').removeClass('is-prev is-next is-current');
         this.$el.find('.js-pagination-item').removeClass('is-current');
 
-        if (this.mS > 1) {
-        newPrev.addClass('is-prev');
-        newNext.addClass('is-next');
+        if (this.maxSlide > 1) {
+            newPrev.addClass('is-prev');
+            newNext.addClass('is-next');
         }
 
         newCurrent.addClass('is-current');
         this.$el.find('.js-pagination-item[data-slide="' + this.currentSlide + '"]').addClass('is-current');
     }
 
-    startaP() {
+    nextSlide() {
+        this.preventClick();
+        this.goToSlide(this.currentSlide + 1);
+    }
+
+    prevSlide() {
+        this.preventClick();
+        this.goToSlide(this.currentSlide - 1);
+    }
+
+    startAutoplay() {
         this.interval = setInterval(() => {
         if (!this.isAnimating) {
             this.nextSlide();
         }
-        }, this.aPSpeed);
+        }, this.autoplaySpeed);
     }
 
     destroy() {
@@ -108,15 +123,14 @@ class Slideshow {
 
 
     (function () {
-    let loaded = false;
-    let maxLoad = 3000;
+        let loaded = false;
+        let maxLoad = 3000;
 
-    function loadSlider() {
-        const options = {
-        sPg: true
+        function load() {
+            const options = {
+            showPagination: true
         };
-
-        slideShow = new Slideshow(options);
+        let slideShow = new Slideshow(options);
     }
 
     function addLoadClass() {
@@ -130,14 +144,14 @@ class Slideshow {
     $window.on('load', function () {
         if (!loaded) {
         loaded = true;
-        loadSlider();
+        load();
         }
     });
 
     setTimeout(function () {
         if (!loaded) {
-        loaded = true;
-        loadSlider();
+            loaded = true;
+            load();
         }
     }, maxLoad);
 

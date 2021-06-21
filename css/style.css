@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap');
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -160,6 +161,7 @@ h1 {
 }
 
 .aboutus-section{
+ 
   padding: 50px;
   text-align: center;
   background: linear-gradient(-45deg, #02006d, #2555f1, #1964bb, #0320c273);
@@ -170,17 +172,40 @@ h1 {
 .aboutus-section h1{
   color: white;
   font-size: 2rem;
+  font-weight: bold;
   text-transform: uppercase;
+  font-family: 'Poppins', sans-serif;
 }
 
-.container-aboutus{
-  color: lightgray;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  min-height: 90vh;
-  width: 85vw;
-  margin: 0 auto;
+.col-50 .text-about{
+  padding: 140px 20px 20px 20px;
+  color: white;
+  font-size: 1.4rem;
+  text-align: justify;
 }
+
+.historycontainer{
+  max-width: 1200px;
+    margin: 4% auto;
+}
+
+.historycontainer .textc{ 
+  color: white;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  text-align: justify;
+}
+
+@media (max-width: 800px) {
+  .col-50 .text-about{
+    padding: 20px;
+  }
+  .historycontainer .textc{ 
+    padding: 20px;
+  }
+  
+}
+
 
 @keyframes gradient {
 	0% {
@@ -194,21 +219,26 @@ h1 {
 	}
 }
 
-/* payment */
+/* Payment */
 
-.payment-section{
-  margin: 70px 40px 40px 50px;
-  /* margin: 20px; */
+.payment-section {
+  width: 40%;
+  margin: 70px auto;
   padding-top: 80px;
   padding: 60px 40px 40px 50px;
   background-color: rgb(8, 8, 8);
   border-radius: 10px;
   box-shadow: 10px black;
-
 }
 
-.payment-section label{
+.payment-section label {
   color: white;
+}
+
+@media screen and (max-width: 991px) {
+  .payment-section {
+    width: 90%;
+  }
 }
 
 .row {
@@ -216,6 +246,7 @@ h1 {
   display: flex;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
+
   margin: 0 -16px;
 }
 
@@ -232,18 +263,15 @@ h1 {
 .col-50 h3{
   color: white;
 }
+
 .col-75 {
-  -ms-flex: 75%;
-  flex: 75%;
+  -ms-flex: 35%;
+  flex: 35%;
 }
 
-.col-25,
-.col-50,
-.col-75 {
+.col-25, .col-50, .col-75 {
   padding: 0 16px;
 }
-
-
 
 .payment-section input[type=text] {
   width: 100%;
@@ -364,6 +392,10 @@ img {
   padding: 1rem;
 }
 
+.games_item a {
+  text-decoration: none;
+}
+
 @media (min-width: 40rem) {
   .games_item {
     width: 50%;
@@ -382,12 +414,14 @@ img {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  border-radius: 0 0 20px 20px;
 }
 
 .game_content {
   padding: 1rem;
   background: linear-gradient(to bottom left, #314b61 40%, #597c91 100%);
-  height: 100%;
+  height: 250px;
+  border-radius: 0 0 20px 20px;
 }
 
 .game_title {
@@ -397,6 +431,13 @@ img {
   letter-spacing: 1px;
   text-transform: capitalize;
   margin: 0px;
+}
+
+.news {
+  color: darkgray;
+  text-transform: uppercase;
+  font-size: 12px;
+  margin-bottom: 4px;
 }
 
 .game_text {
@@ -502,8 +543,8 @@ img {
   background-color: #1e1e22;
   overflow: hidden;
   height: 50vh;
-  width: 40vh;
-  min-width: 870px;
+  width: auto;
+  min-width: auto;
   margin: 2em auto;
   box-shadow: 0 0 14px 2px rgba(0, 0, 0, 0.4);
 }

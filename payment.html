@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STim</title>
+    <title>STim &mdash; Payment</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.3/css/all.css" integrity="sha384-SZXxX4whJ79/gErwcOYf+zWLeJdY/qpuqC4cAa9rOGUstPomtqpuNWT9wdPEn2fk" crossorigin="anonymous">
-
-
+    <link rel="icon" type="image/png" href="img/logo.png">
   </head>
   <body>
     <header class="header-fixed">
@@ -18,7 +17,7 @@
                 <a href="index.html" >Home</a>
                 <a href="library.html">Library</a>
                 <a href="news.html">News</a>
-                <a href="about.ht">About Us</a>
+                <a href="about.html">About Us</a>
                 <a href="payment.html" class="active">Payment</a>
             </nav>
         </div>
@@ -33,26 +32,33 @@
             <div class="col-75">
                 <div class="row">
                     <div class="col-50">
-                        <!-- <h3>Billing Address</h3> -->
+                       
+                        <form action="">
+
                         <!-- Fullname -->
                         <label for="fname"><i class="fa fa-id-card-alt"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="Your name">
-
+                        <input type="text" id="fullname" name="fullname" placeholder="Your name">
+                        <p id="vfullname"></p>
+                        
                         <!-- Username -->
                         <label for="username"><i class="fa fa-user"></i> Username</label>
                         <input type="text" id="username" name="username" placeholder="Your username">
+                        <p id="vusername"></p>
 
                         <!-- Email -->
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="email" id="email" name="email" placeholder="Your email">
+                        <input type="text" id="email" name="email" placeholder="Your email">
+                        <p id="vemail"></p>
 
                         <!-- Password -->
                         <label for="password"><i class="fa fa-lock"></i> Password</label>
                         <input type="password" id="password" name="password" placeholder="Your password">
+                        <p id="vpassword"></p>
 
                         <!-- Country -->
-                        <label for="country"><i class="fa fa-lock"></i> Country</label>
+                        <label for="country"><i class="fa fa-globe-africa"></i> Country</label>
                         <select id="country" name="country" class="form-control">
+                            <option id="pleaseselect" value="Please select">Please select</option>
                             <option value="Afghanistan">Afghanistan</option>
                             <option value="Åland Islands">Åland Islands</option>
                             <option value="Albania">Albania</option>
@@ -298,39 +304,46 @@
                             <option value="Zambia">Zambia</option>
                             <option value="Zimbabwe">Zimbabwe</option>
                         </select>
+                        <p id="vcountry"></p>
 
                         <!-- Payment Method -->
                         <label for="paymentmethod">
                             <i class="fa fa-shopping-cart"></i> Payment Method
                         </label>
+                        
                         <label class="radio-inline">
-                            <input type="radio" name="debit" style="margin-right:1vh;"> Debit
-                            <input type="radio" name="credit" style="margin-right:1vh;">  Credit
+                            <input type="radio" name="paymentm" id="debit" style="margin-right:1vh;"> Debit
+                            <input type="radio" name="paymentm" id="credit" style="margin-right:1vh;"> Credit
                         </label>
-            
+                        <p id="vpaymentmethod"></p>
+
                         <div class="row">
                             <div class="col-50">
                                 <!-- Debit/ Credit card -->
-                                <label for="ccnum"><i class="fa fa-credit-card"></i> Debit / Credit card number</label>
+                                <label for="ccnumber"><i class="fa fa-credit-card"></i> Debit / Credit card number</label>
                                 <input type="text" id="cardnumber" name="cardnumber" placeholder="1111-2222-3333-4444">
+                                <p id="vccnumber"></p>
                             </div>
                             <div class="col-50">
                                 <label for="exp"><i class="fa fa-expand-arrows-alt"></i> Exp</label>
                                 <input type="text" id="exp" name="exp" placeholder="01/21">
+                                <p id="vexp"></p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <input type="submit" value="Submit" class="btn">
+                <input type="submit" value="Submit" class="btn" onclick="validate()">
             </div>
+        </form>
         </div>
     </div>
 
-    <footer>
+    <footer style="bottom: -280px;">
       <h1>&copy; 2301857651 - Samuel Christian | 2301851206 - Stanley Jaya</h1>
     </footer>
     
     <div class="header-fixed-placeholder"></div>
+    <script src="scripts/validation.js"></script>
     <script src="scripts/index.js"></script>
   </body>
 </html>
