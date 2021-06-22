@@ -5,8 +5,7 @@ class Slideshow {
     constructor(userOptions = {}) {
         const defaultOptions = {
         $el: $('.slideshow'),
-        showArrows: false,
-        showPagination: true,
+        sPage: true,
         duration: 5000,
         autoplay: true };
 
@@ -14,16 +13,15 @@ class Slideshow {
         let options = Object.assign({}, defaultOptions, userOptions);
 
         this.$el = options.$el;
-        this.maxSlide = this.$el.find($('.js-slider-home-slide')).length;
-        this.showArrows = this.maxSlide > 1 ? options.showArrows : false;
-        this.showPagination = options.showPagination;
+        this.mSl = this.$el.find($('.js-slider-home-slide')).length;
+        this.sPage = options.sPage;
         this.currentSlide = 1;
         this.isAnimating = false;
         this.animationDuration = 1200;
         this.autoplaySpeed = options.duration;
         this.interval;
         this.$controls = this.$el.find('.js-slider-home-button');
-        this.autoplay = this.maxSlide > 1 ? options.autoplay : false;
+        this.autoplay = this.mSl > 1 ? options.autoplay : false;
 
         this.$el.on('click', '.js-slider-home-next', event => this.nextSlide());
         this.$el.on('click', '.js-slider-home-prev', event => this.prevSlide());
@@ -43,11 +41,10 @@ class Slideshow {
         this.startAutoplay();
         }
 
-        if (this.showPagination) {
-        let paginationNumber = this.maxSlide;
+        if (this.sPage) {
         let pagination = '<div class="pagination"><div class="container">';
 
-        for (let i = 0; i < this.maxSlide; i++) {
+        for (let i = 0; i < this.mSl; i++) {
             let item = `<span class="pagination__item js-pagination-item ${i === 0 ? 'is-current' : ''}" data-slide=${i + 1}>${i + 1}</span>`;
             pagination = pagination + item;
         }
@@ -75,22 +72,22 @@ class Slideshow {
     goToSlide(index) {
         this.currentSlide = parseInt(index);
 
-        if (this.currentSlide > this.maxSlide) {
+        if (this.currentSlide > this.mSl) {
         this.currentSlide = 1;
         }
 
         if (this.currentSlide === 0) {
-        this.currentSlide = this.maxSlide;
+        this.currentSlide = this.mSl;
         }
 
         const newCurrent = this.$el.find('.js-slider-home-slide[data-slide="' + this.currentSlide + '"]');
         const newPrev = this.currentSlide === 1 ? this.$el.find('.js-slider-home-slide').last() : newCurrent.prev('.js-slider-home-slide');
-        const newNext = this.currentSlide === this.maxSlide ? this.$el.find('.js-slider-home-slide').first() : newCurrent.next('.js-slider-home-slide');
+        const newNext = this.currentSlide === this.mSl ? this.$el.find('.js-slider-home-slide').first() : newCurrent.next('.js-slider-home-slide');
 
         this.$el.find('.js-slider-home-slide').removeClass('is-prev is-next is-current');
         this.$el.find('.js-pagination-item').removeClass('is-current');
 
-        if (this.maxSlide > 1) {
+        if (this.mSl > 1) {
             newPrev.addClass('is-prev');
             newNext.addClass('is-next');
         }
@@ -123,12 +120,12 @@ class Slideshow {
 
 
     (function () {
-        let loaded = false;
-        let maxLoad = 3000;
+    let loaded = false;
+    let maxLoad = 3000;
 
-        function load() {
-            const options = {
-            showPagination: true
+    function load() {
+        const options = {
+            sPage: true
         };
         let slideShow = new Slideshow(options);
     }
@@ -137,14 +134,14 @@ class Slideshow {
         $body.addClass('is-loaded');
 
         setTimeout(function () {
-        $body.addClass('is-animated');
+            $body.addClass('is-animated');
         }, 600);
     }
 
     $window.on('load', function () {
         if (!loaded) {
-        loaded = true;
-        load();
+            loaded = true;
+            load();
         }
     });
 

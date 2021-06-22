@@ -172,23 +172,18 @@ function vlPassword() {
         vlpassword.style.marginBottom = "20px";
         vlpassword.style.color = "white";
         return;
-    }
-
-    for(var a = 0; a < password.length; a++) {
-        var charCode = password.charCodeAt(a);
-        if(!((charCode >= 48 && charCode <= 57) || (charCode >= 65 && charCode <= 90))) {
-            vlpassword.textContent = "Must contains uppercase and number!";
-            vlpassword.style.background = "red";
-            vlpassword.style.display = "block";
-            vlpassword.style.padding = "10px";
-            vlpassword.style.fontSize = "15px";
-            vlpassword.style.borderRadius = "10px";
-            vlpassword.style.marginBottom = "20px";
-            vlpassword.style.color = "white";
-            return;
-        } else {
-            vlpassword.style.display = "none";
-        }
+    } else if(!isStrPwd(password)) {
+        vlpassword.textContent = "Must contains uppercase and number!";
+        vlpassword.style.background = "red";
+        vlpassword.style.display = "block";
+        vlpassword.style.padding = "10px";
+        vlpassword.style.fontSize = "15px";
+        vlpassword.style.borderRadius = "10px";
+        vlpassword.style.marginBottom = "20px";
+        vlpassword.style.color = "white";
+        return;
+    } else {
+        vlpassword.style.display = "none";
     }
 }
 
@@ -211,7 +206,6 @@ function vlCountry() {
     else
     {
         vlcountry.style.display = "none";
-        
     }
 }
 

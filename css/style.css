@@ -200,6 +200,9 @@ h1 {
   .col-50 .text-about{
     padding: 20px;
   }
+  .col-50{
+    padding: 20px;
+  }
   .historycontainer .textc{ 
     padding: 20px;
   }
@@ -438,6 +441,10 @@ img {
   text-transform: uppercase;
   font-size: 12px;
   margin-bottom: 4px;
+}
+
+hr {
+  width: 60%;
 }
 
 .game_text {
